@@ -1,0 +1,108 @@
+# Importing necessary libraries 
+
+import pandas as pd 
+
+from sklearn.model_selection import train_test_split 
+
+from sklearn.linear_model import LogisticRegression 
+
+from sklearn.metrics import accuracy_score 
+
+ 
+
+# Specify the file path of the Excel spreadsheet 
+
+file_path = 'C:\\Users\\MonfortoAS28\Downloads\\baseball.xlsx' 
+
+ 
+
+# Read the Excel file into a DataFrame 
+
+data = pd.read_excel(file_path) 
+
+ 
+
+# Define features (X) and target variable (y) 
+
+X = data[['Runs Scored', 'Runs Allowed', 'Wins', 'OBP', 'SLG', 'Team Batting Average']] 
+
+y = data['Playoffs']  # Target variable - 1 for playoffs, 0 for no playoffs 
+
+ 
+
+# Split the data into training and testing sets (80% training, 20% testing) 
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) 
+
+ 
+
+# Initialize logistic regression model 
+
+model = LogisticRegression() 
+
+ 
+
+# Train the model on the training data 
+
+model.fit(X_train, y_train) 
+
+ 
+
+# Predict the target variable on the testing set 
+
+y_pred = model.predict(X_test) 
+
+ 
+
+# Calculate the accuracy of the model 
+
+accuracy = accuracy_score(y_test, y_pred) 
+
+print("Accuracy of the model:", accuracy) 
+
+ 
+
+# Example: Predicting playoff outcome for a new set of team statistics 
+
+# You can input new team statistics to predict playoff outcome 
+
+new_data = { 
+
+    'Runs Scored': [750], 
+
+    'Runs Allowed': [650], 
+
+    'Wins': [90], 
+
+    'OBP': [0.340], 
+
+    'SLG': [0.450], 
+
+    'Team Batting Average': [0.270] 
+
+} 
+
+ 
+
+# Create a DataFrame from the new data 
+
+new_df = pd.DataFrame(new_data) 
+
+ 
+
+# Use the trained model to predict playoff outcome for the new data 
+
+predicted_playoffs = model.predict(new_df) 
+
+ 
+
+# Display the predicted playoff outcome 
+
+if predicted_playoffs[0] == 1: 
+
+    print("This team is predicted to make the playoffs!") 
+
+else: 
+
+    print("This team is predicted to NOT make the playoffs.") 
+print("Go Sports!")
